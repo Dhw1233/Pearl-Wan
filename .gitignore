@@ -1,0 +1,13 @@
+models/
+exp/
+*.log
+__pycache__/
+data/*.jsonl
+
+models
+figures/
+*.docx
+generate_thesis.py
+auto_update*
+monitor_humaneval*
+*.pdf
