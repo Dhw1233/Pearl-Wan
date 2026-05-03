@@ -33,24 +33,6 @@
 │  └───────────┘  │                                     │                 │
 └─────────────────┘                                     └─────────────────┘
 ```
-
-### 分布式双节点模式（torch.distributed）
-
-```
-  Node 0 (Edge)                    Node 1 (Cloud)
-┌─────────────────┐              ┌─────────────────┐
-│  Rank 0         │              │  Rank 1         │
-│  Draft Model    │◄─ torch.dist ─►│  Target Model   │
-│  (cuda:0)       │   TCP/NCCL     │  (cuda:0)       │
-└─────────────────┘              └─────────────────┘
-       ▲                                  ▲
-       │                                  │
-   loads data                     receives draft
-   saves results                  sends verify result
-```
-
-## 文件结构
-
 ```
 pearl_wan/
 ├── src/
