@@ -138,7 +138,6 @@ time_per_token = (gamma * t_draft + RTT + gamma * t_transmit + t_target) / (gamm
 1. **CPU 性能瓶颈**：当前在无 GPU 环境测试，大模型推理极慢，建议使用 GPU 环境运行 7B+70B 组合。
 2. **Top-k 压缩有损**：极端情况下拒绝采样可能落入非 top-k 区域，导致分布偏差。可关闭 `--enable_compression` 使用无损模式。
 3. **单进程模拟**：当前云边协同为单进程顺序模拟，未实现真正的跨设备并行。生产环境需拆分为独立 edge/cloud 服务进程。
-4. **`torch_dtype` 警告**：transformers 5.4.0 中 `torch_dtype` 参数名已弃用，代码中已做兼容处理。
 
 ## 参考文献
 
