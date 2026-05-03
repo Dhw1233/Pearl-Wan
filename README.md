@@ -68,18 +68,9 @@ pearl_wan/
 │   ├── eval_humaneval_wan.py      # 单机 HumanEval
 │   ├── eval_gsm8k_wan.py          # 单机 GSM8K
 │   ├── eval_mgsm_wan.py           # 单机 MGSM
-│   ├── eval_humaneval_dist.py     # 分布式 HumanEval（2-node）
-│   └── eval_gsm8k_dist.py         # 分布式 GSM8K（2-node）
-├── models/                        # 本地模型目录
-│   ├── qwen2.5-0.5b-instruct
-│   ├── qwen2.5-1.5b-instruct
-│   └── qwen2.5-7b-instruct
-├── run_wan.sh                     # 单机 CPU 测试
-├── run_gpu_benchmark.sh           # 单机 GPU benchmark
-├── run_wan_comparison.sh          # 多 RTT 对比
-├── run_pearl_wan_1node_2gpu.slurm # Slurm 单节点双 GPU
-├── run_pearl_wan_2node.slurm      # Slurm 双节点分布式
-├── plot_results.py                # 结果绘图脚本
+├── plot_ablation.py               # 消融实验
+├── plot_results.py                # 吞吐结果
+├── run_benchmark_ablation.slurm          # 消融实验
 └── README.md
 ```
 
@@ -107,37 +98,7 @@ bash run_wan.sh
 - Compression: 开启
 - Fallback: 开启
 
-### 2. 运行多 RTT 对比
-
-```bash
-bash run_wan_comparison.sh
-```
-
-将依次测试 RTT=20ms、50ms、100ms 三种网络条件下的性能。
-
-### 3. 单节点双 GPU 测试（单机多卡）
-
-在同一节点的两张 GPU 上分别运行 Edge 和 Cloud：
-
-```bash
-sbatch run_pearl_wan_1node_2gpu.slurm
-```
-
-- Rank 0 → `cuda:0`（Draft Model）
-- Rank 1 → `cuda:1`（Target Model）
-
-### 4. 双节点分布式测试（跨机）
-
-在两个节点上分别运行 Edge 和 Cloud，通过 torch.distributed 通信：
-
-```bash
-sbatch run_pearl_wan_2node.slurm
-```
-
-- Node 0, Rank 0 → Edge（Draft Model）
-- Node 1, Rank 1 → Cloud（Target Model）
-
-### 5. 自定义参数
+### 2. 自定义参数
 
 ```bash
 python3 benchmark/eval_wan.py \
